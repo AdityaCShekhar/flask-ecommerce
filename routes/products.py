@@ -26,7 +26,6 @@ def get_product_by_id_route(product_id):
     response, status_code = get_product_by_id(product_id)  
     return jsonify(response), status_code  
 
-
 @products.route("/")
 def get_products():
     response, status_code = get_all_products() 
