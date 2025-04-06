@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-from services.auth_service import register_user, validate_user, token_required
+from services.auth_service import register_user, validate_user
+from ..utils import token_required
 
 auth = Blueprint("auth", __name__)
 
