@@ -30,7 +30,6 @@ def get_product_by_id_route(current_user,product_id):
     response, status_code = get_product_by_id(product_id)  
     return jsonify(response), status_code  
 
-
 @products.route("/")
 @utils.token_required
 def get_products(current_user):

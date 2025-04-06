@@ -1,9 +1,12 @@
 import hashlib
-from models.db import users_col, cart_col
+import os
+from werkzeug.utils import secure_filename
+from models.db import users_col
 from flask import jsonify, request
 from functools import wraps
-import os
 import jwt
+
+import os
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -43,3 +46,22 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
     
     return decorated_function
+
+UPLOAD_FOLDER = "uploads"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+
+# Ensure upload folder exists
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_file(filename):
+    """Check if the file has a valid extension."""
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def save_file(file):
+    """Save the file and return its URL."""
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(file_path)
+    file_url = f"http://127.0.0.1:5000/uploads/{filename}"
+    return file_url

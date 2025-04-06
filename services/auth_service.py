@@ -1,3 +1,4 @@
+from ..utils import hash_password
 import jwt
 import datetime
 from models.db import users_col
@@ -5,6 +6,7 @@ import utils
 import os
 
 SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 def register_user(data):
     if users_col.find_one({"email": data['email']}):
