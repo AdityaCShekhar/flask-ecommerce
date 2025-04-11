@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-from services.auth_service import register_user, validate_user, token_required
+from services.auth_service import register_user, validate_user
+import utils
 
 auth = Blueprint("auth", __name__)
 
@@ -23,6 +24,6 @@ def logout():
     return jsonify({"message": "Logged out successfully!"})
 
 @auth.route("/protected", methods=["GET"])
-@token_required
+@utils.token_required
 def protected_route(current_user):
     return jsonify({"message": f"Hello, {current_user}!"})
