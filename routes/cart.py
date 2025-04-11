@@ -1,16 +1,19 @@
-from flask import Blueprint, request, session, jsonify
-from services.cart_service import add_to_cart, get_cart
+from flask import Blueprint, request, jsonify
+from services.cart_service import add_to_cart, view_cart, remove_from_cart
 
 cart = Blueprint("cart", __name__)
 
-@cart.route("/add_to_cart/<productId>")
-def add_to_cart_route(productId):
-    if 'email' not in session:
-        return jsonify({"error": "Unauthorized!"}), 401
-    return jsonify(add_to_cart(session['email'], productId))
+@cart.route("/add_to_cart/<product_id>", methods=["POST"])
+def add_to_cart_route(product_id):
+    response = add_to_cart(product_id)
+    return jsonify(response)
 
-@cart.route("/cart")
-def cart():
-    if 'email' not in session:
-        return jsonify({"error": "Unauthorized!"}), 401
-    return jsonify(get_cart(session['email']))
+@cart.route("/view_cart", methods=["GET"])
+def view_cart_route():
+    response = view_cart()
+    return jsonify(response)
+
+@cart.route("/remove_from_cart/<product_id>", methods=["DELETE"])
+def remove_from_cart_route(product_id):
+    response = remove_from_cart(product_id)
+    return jsonify(response)

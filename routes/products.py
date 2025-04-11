@@ -12,6 +12,8 @@ def add_product_route(current_user):
     return jsonify(response), 200
 
 @products.route("/remove_product", methods=["POST"])
+def remove_product_route(current_user):  # JWT-protected
+=======
 @utils.token_required
 def remove_product_route(current_user):
     try:

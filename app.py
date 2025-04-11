@@ -15,7 +15,11 @@ CORS(app)
 app.register_blueprint(auth)
 app.register_blueprint(image)
 app.register_blueprint(products, url_prefix="/products")
-# app.register_blueprint(cart, url_prefix="/cart")
+app.register_blueprint(cart, url_prefix="/cart")
+
+@app.route("/")
+def home():
+    return "Welcome to the Flask E-commerce API!"
 
 if __name__ == "__main__":
     app.run(debug=True)
