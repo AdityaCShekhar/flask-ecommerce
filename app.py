@@ -10,7 +10,7 @@ load_dotenv()
 
 app.register_blueprint(auth)
 app.register_blueprint(products, url_prefix="/products")
-# app.register_blueprint(cart, url_prefix="/cart")
+app.register_blueprint(cart, url_prefix="/cart")
 
 @app.route("/")
 def home():
